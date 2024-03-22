@@ -1,2 +1,4 @@
 rootProject.name = 'homeworks'
+include 'homework-l4:otus-unittests-2'
+include 'test'
 
