@@ -13,6 +13,9 @@ import ru.otus.bank.service.AccountService;
 import java.math.BigDecimal;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.argThat;
 import static org.mockito.Mockito.when;
 
@@ -60,4 +63,28 @@ public class PaymentProcessorImplTest {
 
     }
 
+    @Test
+    public void makeTransferWithComissionTest() {
+        Agreement sourceAgreement = new Agreement();
+        sourceAgreement.setId(1L);
+
+        Agreement destAgreement = new Agreement();
+        destAgreement.setId(2L);
+
+        Account sourceAccount = new Account();
+        sourceAccount.setAmount(BigDecimal.TEN);
+        sourceAccount.setType(0);
+
+        Account destAccount = new Account();
+        destAccount.setAmount(BigDecimal.ZERO);
+        destAccount.setType(0);
+
+        when(accountService.getAccounts(sourceAgreement)).thenReturn(List.of(sourceAccount));
+        when(accountService.getAccounts(destAgreement)).thenReturn(List.of(destAccount));
+        when(accountService.makeTransfer(anyLong(), anyLong(), any(BigDecimal.class))).thenReturn(true);
+
+        boolean res = paymentProcessor.makeTransferWithComission(sourceAgreement, destAgreement, 0,
+                0, BigDecimal.ONE, new BigDecimal("0.01"));
+        assertTrue(res);
+    }
 }

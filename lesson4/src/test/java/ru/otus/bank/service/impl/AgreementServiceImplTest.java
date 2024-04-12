@@ -4,11 +4,18 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import ru.otus.bank.dao.AgreementDao;
 import ru.otus.bank.entity.Agreement;
 
 import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 public class AgreementServiceImplTest {
 
@@ -34,7 +41,7 @@ public class AgreementServiceImplTest {
         Optional<Agreement> result = agreementServiceImpl.findByName(name);
 
         Assertions.assertTrue(result.isPresent());
-        Assertions.assertEquals(10, agreement.getId());
+        assertEquals(10, agreement.getId());
     }
 
     @Test
@@ -51,9 +58,24 @@ public class AgreementServiceImplTest {
 
         Optional<Agreement> result = agreementServiceImpl.findByName(name);
 
-        Assertions.assertEquals("test", captor.getValue());
+        assertEquals("test", captor.getValue());
         Assertions.assertTrue(result.isPresent());
-        Assertions.assertEquals(10, agreement.getId());
+        assertEquals(10, agreement.getId());
     }
+    @Test
+    public void addAgreementTest(){
+        String name = "test";
+        Agreement agreement = new Agreement();
+        agreement.setId(1L);
+        agreement.setName(name);
 
+        Mockito.when(dao.save(any(Agreement.class))).thenReturn(agreement);
+
+        Agreement result = agreementServiceImpl.addAgreement(name);
+
+        assertNotNull(result);
+        assertEquals("test", result.getName());
+        assertEquals(agreement, result);
+        verify(dao, times(1)).save(any(Agreement.class));
+    }
 }
