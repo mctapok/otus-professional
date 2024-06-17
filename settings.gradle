@@ -4,4 +4,7 @@ include 'lesson6'
 include 'lesson8'
 include 'lesson11'
 include 'lesson15'
+include 'lesson16'
+include 'lesson19'
+include 'spring-boot'
 
