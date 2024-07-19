@@ -1,0 +1,3 @@
+insert into lesson_26.customers (name) values ('bob'),('mike'),('lee'),('lisa'),('rik'),('vika'),('oleg');
+insert into lesson_26.products (price, name) values (1000, 'iphone99'), (400, 'xiaomi pro ultra giga'), (200, 'samsung'), (2000, 'nokia 3310'), (3000, 'motorola rzrv3');
+insert into lesson_26.purchases (customer_id, product_id, price) values (1, 2, 400), (1, 3, 200), (2, 1, 1000), (4, 4, 2000), (4, 3, 200);
