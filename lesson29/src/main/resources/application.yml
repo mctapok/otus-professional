@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/hibernate
+    username: postgres
+    password: postgres
+    hikari:
+      schema: lesson_29
+#logging:
+#  level:
+#    ROOT: DEBUG
