@@ -1,15 +1,15 @@
+package ru.gavrilov.threadpool;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 public class MyThreadPool {
-    private int threads;
     LinkedList<Runnable> taskQueue = new LinkedList<>();
     private List<PoolThreadRunnable> threadRunnables = new ArrayList<>();
     private boolean isStopped = false;
 
     public MyThreadPool(int threads) {
-        this.threads = threads;
         for (int i = 1; i <= threads; i++) {
             PoolThreadRunnable poolThreadRunnable = new PoolThreadRunnable(taskQueue);
             threadRunnables.add(poolThreadRunnable);
@@ -26,7 +26,7 @@ public class MyThreadPool {
     }
 
     public synchronized void waitUntilAllTaskComplete() {
-        while (this.taskQueue.size() > 0) {
+        while (!this.taskQueue.isEmpty()) {
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e) {

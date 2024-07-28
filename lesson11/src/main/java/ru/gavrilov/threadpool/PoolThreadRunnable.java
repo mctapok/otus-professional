@@ -1,40 +1,40 @@
-import java.util.LinkedList;
+package ru.gavrilov.threadpool;
+import java.util.List;
 
 public class PoolThreadRunnable implements Runnable {
     Thread thread = null;
-    LinkedList<Runnable> tasks;
+    List<Runnable> tasks;
     private boolean isStopped = false;
 
-    public PoolThreadRunnable(LinkedList<Runnable> tasks) {
+    public PoolThreadRunnable(List<Runnable> tasks) {
         this.tasks = tasks;
     }
 
     @Override
     public void run() {
         this.thread = Thread.currentThread();
-        while(!isStopped){
+        while (!isStopped) {
             Runnable runnable;
-            synchronized (tasks){
-                while(tasks.isEmpty()){
+            synchronized (tasks) {
+                while (tasks.isEmpty()) {
                     try {
                         tasks.wait();
                     } catch (InterruptedException e) {
-//                        e.printStackTrace();
                         thread.interrupt();
                         return;
                     }
                 }
-               runnable = tasks.poll();
+                runnable = tasks.remove(0);
             }
             try {
                 runnable.run();
-            }catch (RuntimeException e){
+            } catch (RuntimeException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    public void doStop(){
+    public void doStop() {
         isStopped = true;
         thread.interrupt();
     }
