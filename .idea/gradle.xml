@@ -5,10 +5,19 @@
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleHome" value="" />
+        <option name="gradleJvm" value="jbr-17 (2)" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/lesson11" />
+            <option value="$PROJECT_DIR$/lesson15" />
+            <option value="$PROJECT_DIR$/lesson16" />
+            <option value="$PROJECT_DIR$/lesson19" />
+            <option value="$PROJECT_DIR$/lesson22" />
+            <option value="$PROJECT_DIR$/lesson4" />
+            <option value="$PROJECT_DIR$/lesson6" />
+            <option value="$PROJECT_DIR$/lesson8" />
+            <option value="$PROJECT_DIR$/spring-boot" />
           </set>
         </option>
       </GradleProjectSettings>
