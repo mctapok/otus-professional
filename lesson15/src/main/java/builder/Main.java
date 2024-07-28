@@ -1,8 +1,10 @@
-package Builder;
+package builder;
+
+import builder.productbuilder.Product;
 
 public class Main {
     public static void main(String[] args) {
-        Product product = new Product.PepsiProductBuilder()
+        Product pepsiWater = Product.builder()
                 .id(23)
                 .cost(90.5)
                 .description("Pepsi water")
@@ -12,6 +14,6 @@ public class Main {
                 .width(4.5)
                 .length(4.5)
                 .build();
-        System.out.println(product);
+        System.out.println(pepsiWater.getTitle());
     }
 }
