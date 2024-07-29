@@ -18,41 +18,49 @@ import java.util.List;
 @NoArgsConstructor
 public class CustomerDao {
     private final static Log LOGGER = LogFactory.getLog(MethodHandles.lookup().lookupClass());
-    Session session = null;
+    private Session session;
 
     public void addCustomer(Customer customer) {
-        session = JavaBasedSessionFactory.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        Customer addedCustomer = session.merge(customer);
-        session.getTransaction().commit();
-        session.close();
-        LOGGER.info("new customer  " + addedCustomer.toString());
+        try (Session session = JavaBasedSessionFactory.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            Customer addedCustomer = session.merge(customer);
+            session.getTransaction().commit();
+            LOGGER.info("new customer  " + addedCustomer.toString());
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+            LOGGER.error("failed to add customer, error message: " + e.getMessage());
+        }
     }
 
     public List<String> getCustomerProducts(long customerId) {
-        session = JavaBasedSessionFactory.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        Customer customer = session.find(Customer.class, customerId);
-        List<String> customerProducts = new ArrayList<>();
-        if (customer != null) {
-            for (Purchase p : customer.getPurchases()){
-                customerProducts.add(p.getProduct().getName() + " - " + p.getPrice());
+        try (Session session = JavaBasedSessionFactory.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            Customer customer = session.find(Customer.class, customerId);
+            List<String> customerProducts = new ArrayList<>();
+            if (customer != null) {
+                for (Purchase p : customer.getPurchases()) {
+                    customerProducts.add(p.getProduct().getName() + " - " + p.getPrice());
+                }
             }
+            session.getTransaction().commit();
+            return customerProducts;
+        } catch (Exception e) {
+            LOGGER.error("failed get customer products, error message: " + e.getMessage());
+            return null;
         }
-        session.getTransaction().commit();
-        session.close();
-        return customerProducts;
     }
 
     public void deleteCustomer(long customerId) {
-        session = JavaBasedSessionFactory.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        Customer customer = session.find(Customer.class, customerId);
-        if (customer != null) {
-            session.remove(customer);
+        try (Session session = JavaBasedSessionFactory.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            Customer customer = session.find(Customer.class, customerId);
+            if (customer != null) {
+                session.remove(customer);
+            }
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+            LOGGER.error("failed delete customer, error message: " + e.getMessage());
         }
-        session.getTransaction().commit();
-        session.close();
     }
-
 }

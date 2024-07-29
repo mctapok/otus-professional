@@ -10,14 +10,14 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Main {
-    private static CustomerDao customerDAO = new CustomerDao();
-    private static ProductDao productDao = new ProductDao();
+    private final static CustomerDao customerDAO = new CustomerDao();
+    private final static ProductDao productDao = new ProductDao();
 
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        dbInit();
         while (true) {
+            int command;
             System.out.println("""
                     enter command
                     1: show products by customer ID
@@ -25,7 +25,12 @@ public class Main {
                     3: delete product by ID
                     4: delete customer by ID
                     """);
-            int command = Integer.parseInt(scanner.nextLine());
+            try {
+                command = Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("invalid input, enter a number");
+                continue;
+            }
             switch (command) {
                 case 1:
                     showProductsByCustomers();
@@ -60,7 +65,7 @@ public class Main {
         List<String> customersByProduct = productDao.getProductCustomers(Long.parseLong(scanner.nextLine()));
         if (!customersByProduct.isEmpty()) {
             customersByProduct.forEach(System.out::println);
-        }else {
+        } else {
             System.out.println("No customers found");
         }
     }
@@ -70,13 +75,8 @@ public class Main {
         List<String> productsByCustomers = customerDAO.getCustomerProducts(Long.parseLong(scanner.nextLine()));
         if (!productsByCustomers.isEmpty()) {
             productsByCustomers.forEach(System.out::println);
-        }else {
+        } else {
             System.out.println("No products found");
-        }
-    }
-
-    private static void dbInit() {
-        try(Session session = JavaBasedSessionFactory.getSessionFactory().getCurrentSession()){
         }
     }
 }
