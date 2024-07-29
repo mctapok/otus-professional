@@ -11,6 +11,7 @@ import java.util.Optional;
 @Component
 public class ProductRepository {
     private List<Product> products;
+    private Long lastAddedId = 4L;
 
     @PostConstruct
     public void init() {
@@ -24,10 +25,12 @@ public class ProductRepository {
     public List<Product> findAll() {
         return products;
     }
+
     public Product create(Product product) {
-        Long newId = products.size() + 1L;
+        Long newId = lastAddedId + 1L;
         product.setId(newId);
         products.add(product);
+        this.lastAddedId = newId;
         return product;
     }
 

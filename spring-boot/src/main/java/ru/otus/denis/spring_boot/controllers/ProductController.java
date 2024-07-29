@@ -20,12 +20,12 @@ public class ProductController {
     }
 
     @PostMapping
-    public Product createProduct(@RequestBody CreateProductDto createProductDto, @RequestHeader String title) {
-        return productService.createNewProduct(createProductDto, title);
+    public Product createProduct(@RequestBody CreateProductDto createProductDto) {
+        return productService.createNewProduct(createProductDto);
     }
 
     @GetMapping("/{id}")
-    public Product getProductById(@PathVariable String id) {
-        return productService.getProductById(Long.parseLong(id));
+    public Product getProductById(@PathVariable Long id) {
+        return productService.getProductById(id);
     }
 }

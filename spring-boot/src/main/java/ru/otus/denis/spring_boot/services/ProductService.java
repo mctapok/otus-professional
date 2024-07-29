@@ -17,8 +17,8 @@ public class ProductService {
         return productsRepository.findAll();
     }
 
-    public Product createNewProduct(CreateProductDto createProductDto, String title) {
-        Product product = new Product(title, createProductDto.getPrice());
+    public Product createNewProduct(CreateProductDto createProductDto) {
+        Product product = new Product(createProductDto.getTitle(), createProductDto.getPrice());
         product = productsRepository.create(product);
         return product;
     }
