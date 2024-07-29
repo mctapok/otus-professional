@@ -1,6 +1,7 @@
-package ru.otus.gavrilov.spring.context;
+package ru.otus.gavrilov.spring.context.repo;
 
 import org.springframework.stereotype.Component;
+import ru.otus.gavrilov.spring.context.domain.Product;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,10 +19,8 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public void allProducts() {
-        for (Product p : products) {
-            System.out.println(p.toString());
-        }
+    public List<Product> allProducts() {
+        return new ArrayList<>(products);
     }
 
     @Override

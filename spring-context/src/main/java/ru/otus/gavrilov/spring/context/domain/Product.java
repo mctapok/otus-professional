@@ -1,4 +1,4 @@
-package ru.otus.gavrilov.spring.context;
+package ru.otus.gavrilov.spring.context.domain;
 
 public class Product {
     private long id;

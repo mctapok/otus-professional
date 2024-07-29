@@ -1,4 +1,6 @@
-package ru.otus.gavrilov.spring.context;
+package ru.otus.gavrilov.spring.context.service;
+
+import ru.otus.gavrilov.spring.context.domain.Product;
 
 import java.util.List;
 
