@@ -26,11 +26,10 @@ public class Client {
     private Address address;
 
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<Phone> phoneNumber;
+    private Set<Phone> phoneNumber = new HashSet<>();
 
-    public Client(String name){
+    public Client(String name) {
         this.name = name;
-        this.phoneNumber = new HashSet<>();
     }
 
 }

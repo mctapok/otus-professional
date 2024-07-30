@@ -14,13 +14,12 @@ import lombok.Setter;
 public class Phone {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     @Column(name = "phone_number")
     private String number;
 
-    @JoinColumn(name = "client_id")
+    @JoinColumn(name = "client_id", nullable = false)
     @ManyToOne
     private Client client;
-
 }
